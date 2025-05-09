@@ -162,15 +162,28 @@
                 const email = document.getElementById('authEmail').value
                 const password = document.getElementById('authPassword').value
                 
+                if (!email || !password) {
+                    alert('Please fill in both email and password');
+                    return;
+                }
+
+                console.log('Attempting sign in with:', { email });
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email,
                     password,
                 })
 
-                if (error) throw error
+                if (error) {
+                    console.error('Sign in error:', error);
+                    alert('Error signing in: ' + error.message);
+                    return;
+                }
+
+                console.log('Sign in successful:', data);
                 showContactForm()
             } catch (error) {
-                alert('Error signing in: ' + error.message)
+                console.error('Unexpected error:', error);
+                alert('An unexpected error occurred: ' + error.message);
             }
         })
 
@@ -179,15 +192,28 @@
                 const email = document.getElementById('authEmail').value
                 const password = document.getElementById('authPassword').value
                 
+                if (!email || !password) {
+                    alert('Please fill in both email and password');
+                    return;
+                }
+
+                console.log('Attempting sign up with:', { email });
                 const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                 })
 
-                if (error) throw error
-                alert('Registration successful! Please sign in.')
+                if (error) {
+                    console.error('Sign up error:', error);
+                    alert('Error signing up: ' + error.message);
+                    return;
+                }
+
+                console.log('Sign up successful:', data);
+                alert('Registration successful! Please sign in.');
             } catch (error) {
-                alert('Error signing up: ' + error.message)
+                console.error('Unexpected error:', error);
+                alert('An unexpected error occurred: ' + error.message);
             }
         })
 

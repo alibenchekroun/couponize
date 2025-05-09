@@ -5,26 +5,32 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
 // Authentication functions
 async function signUp(email, password) {
+    console.log('Attempting to sign up with:', { email });
     const { data, error } = await supabase.auth.signUp({
         email,
         password,
     })
+    console.log('Sign up result:', { data, error });
     if (error) throw error
     return data
 }
 
 async function signIn(email, password) {
+    console.log('Attempting to sign in with:', { email });
     const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
     })
+    console.log('Sign in result:', { data, error });
     if (error) throw error
     return data
 }
 
 async function signOut() {
+    console.log('Attempting to sign out');
     const { error } = await supabase.auth.signOut()
     if (error) throw error
+    console.log('Successfully signed out');
 }
 
 // User data functions
