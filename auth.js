@@ -12,10 +12,10 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 console.log('Supabase client initialized:', supabase)
 
 // Authentication functions
-async function signUp(email, password) {
-    console.log('Attempting to sign up with:', { email });
+async function signUp(username, password) {
+    console.log('Attempting to sign up with:', { username });
     const { data, error } = await supabase.auth.signUp({
-        email,
+        email: `${username}@example.com`,  // Use dummy email
         password,
     })
     console.log('Sign up result:', { data, error });
@@ -23,10 +23,10 @@ async function signUp(email, password) {
     return data
 }
 
-async function signIn(email, password) {
-    console.log('Attempting to sign in with:', { email });
+async function signIn(username, password) {
+    console.log('Attempting to sign in with:', { username });
     const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: `${username}@example.com`,  // Use dummy email
         password,
     })
     console.log('Sign in result:', { data, error });
