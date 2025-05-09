@@ -151,7 +151,11 @@
     </div>
     <script>
         // Initialize app
+        let isInitialized = false;
         async function initApp() {
+            if (isInitialized) return;
+            isInitialized = true;
+
             // Initialize Supabase
             const supabase = window.supabase.createClient(
                 'https://gvmwcbnumuffpkkjehpf.supabase.co',
