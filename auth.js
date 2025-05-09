@@ -1,7 +1,15 @@
 // Initialize Supabase client
 const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
-const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+
+// Import the Supabase client
+import { createClient } from '@supabase/supabase-js'
+
+// Initialize the Supabase client
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Check if Supabase is initialized
+console.log('Supabase client initialized:', supabase)
 
 // Authentication functions
 async function signUp(email, password) {
