@@ -150,21 +150,21 @@
         </div>
     </div>
     <script>
-        // Initialize Supabase
-        const supabase = window.supabase.createClient(
-            'https://gvmwcbnumuffpkkjehpf.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
-        )
-
         // Initialize app
         async function initApp() {
+            // Initialize Supabase
+            const supabase = window.supabase.createClient(
+                'https://gvmwcbnumuffpkkjehpf.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
+            )
 
-                if (!supabase) {
-                    console.error('Failed to initialize Supabase client');
-                    alert('Failed to initialize Supabase client. Please try refreshing the page.');
-                    return;
-                }
-                console.log('Supabase client initialized:', supabase);
+            // Check if Supabase is initialized
+            if (!supabase) {
+                console.error('Failed to initialize Supabase client');
+                alert('Failed to initialize Supabase client. Please try refreshing the page.');
+                return;
+            }
+            console.log('Supabase client initialized:', supabase);
 
                 // Authentication handlers
                 async function handleSignIn() {
