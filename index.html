@@ -152,15 +152,16 @@
     <script>
         // Wrap everything in an IIFE to avoid scope issues
         (async function() {
-            // Initialize Supabase
+            // Supabase configuration
             const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
             const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
             
-            // Initialize the Supabase client
-            const supabase = supabase.createClient(supabaseUrl, supabaseKey)
-
             // Initialize app
             async function initApp() {
+                // Initialize the Supabase client
+                const { createClient } = supabase
+                const supabase = createClient(supabaseUrl, supabaseKey)
+
                 if (!supabase) {
                     console.error('Failed to initialize Supabase client');
                     alert('Failed to initialize Supabase client. Please try refreshing the page.');
