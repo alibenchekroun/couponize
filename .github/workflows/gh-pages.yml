@@ -9,10 +9,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v4
+    - name: Checkout
+      uses: actions/checkout@v3
       with:
-        branch: gh-pages
-        folder: .
+        fetch-depth: 0
+
+    - name: List files
+      run: ls -la
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        publish_branch: gh-pages
+        force_orphan: true
+        keep_history: true
         clean: true
+        verbose: true
