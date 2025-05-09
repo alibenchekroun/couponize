@@ -149,24 +149,26 @@
             </div>
         </div>
     </div>
-    <script src="auth.js"></script>
     <script>
         // Initialize Supabase
         const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
         
         // Initialize the Supabase client
-        const { createClient } = supabase
-        const supabase = createClient(supabaseUrl, supabaseKey)
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
         // Check if Supabase is initialized
-        console.log('Supabase client initialized:', supabase)
+        if (!supabase) {
+            console.error('Failed to initialize Supabase client');
+            alert('Failed to initialize Supabase client. Please try refreshing the page.');
+            return;
+        }
 
-        // Authentication handlers
+        // Sign in button handler
         document.getElementById('signInBtn').addEventListener('click', async () => {
             try {
-                const username = document.getElementById('authUsername').value
-                const password = document.getElementById('authPassword').value
+                const username = document.getElementById('authUsername').value;
+                const password = document.getElementById('authPassword').value;
                 
                 if (!username || !password) {
                     alert('Please fill in both username and password');
@@ -177,7 +179,7 @@
                 const { data, error } = await supabase.auth.signInWithPassword({
                     email: `${username}@example.com`,  // We'll use a dummy email
                     password,
-                })
+                });
 
                 if (error) {
                     console.error('Sign in error:', error);
@@ -186,17 +188,17 @@
                 }
 
                 console.log('Sign in successful:', data);
-                showContactForm()
+                showContactForm();
             } catch (error) {
                 console.error('Unexpected error:', error);
                 alert('An unexpected error occurred: ' + error.message);
             }
-        })
+        });
 
         document.getElementById('signUpBtn').addEventListener('click', async () => {
             try {
-                const username = document.getElementById('authUsername').value
-                const password = document.getElementById('authPassword').value
+                const username = document.getElementById('authUsername').value;
+                const password = document.getElementById('authPassword').value;
                 
                 if (!username || !password) {
                     alert('Please fill in both username and password');
@@ -207,7 +209,7 @@
                 const { data, error } = await supabase.auth.signUp({
                     email: `${username}@example.com`,  // We'll use a dummy email
                     password,
-                })
+                });
 
                 if (error) {
                     console.error('Sign up error:', error);
@@ -221,7 +223,7 @@
                 console.error('Unexpected error:', error);
                 alert('An unexpected error occurred: ' + error.message);
             }
-        })
+        });
 
         // Contact form handler
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
