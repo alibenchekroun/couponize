@@ -150,128 +150,131 @@
         </div>
     </div>
     <script>
-        // Initialize Supabase
-        const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
-        
-        // Initialize the Supabase client
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+        // Wrap everything in an IIFE to avoid scope issues
+        (async function() {
+            // Initialize Supabase
+            const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
+            
+            // Initialize the Supabase client
+            const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
-        // Initialize app
-        function initApp() {
-            if (!supabase) {
-                console.error('Failed to initialize Supabase client');
-                alert('Failed to initialize Supabase client. Please try refreshing the page.');
-                return;
-            }
-            console.log('Supabase client initialized:', supabase);
-
-            // Authentication handlers
-            async function handleSignIn() {
-                try {
-                    const username = document.getElementById('authUsername').value;
-                    const password = document.getElementById('authPassword').value;
-                    
-                    if (!username || !password) {
-                        alert('Please fill in both username and password');
-                        return;
-                    }
-
-                    console.log('Attempting sign in with:', { username });
-                    const { data, error } = await supabase.auth.signInWithPassword({
-                        email: `${username}@example.com`,
-                        password,
-                    });
-
-                    if (error) {
-                        console.error('Sign in error:', error);
-                        alert('Error signing in: ' + error.message);
-                        return;
-                    }
-
-                    console.log('Sign in successful:', data);
-                    showContactForm();
-                } catch (error) {
-                    console.error('Unexpected error:', error);
-                    alert('An unexpected error occurred: ' + error.message);
+            // Initialize app
+            async function initApp() {
+                if (!supabase) {
+                    console.error('Failed to initialize Supabase client');
+                    alert('Failed to initialize Supabase client. Please try refreshing the page.');
+                    return;
                 }
-            }
+                console.log('Supabase client initialized:', supabase);
 
-            async function handleSignUp() {
-                try {
-                    const username = document.getElementById('authUsername').value;
-                    const password = document.getElementById('authPassword').value;
-                    
-                    if (!username || !password) {
-                        alert('Please fill in both username and password');
-                        return;
+                // Authentication handlers
+                async function handleSignIn() {
+                    try {
+                        const username = document.getElementById('authUsername').value;
+                        const password = document.getElementById('authPassword').value;
+                        
+                        if (!username || !password) {
+                            alert('Please fill in both username and password');
+                            return;
+                        }
+
+                        console.log('Attempting sign in with:', { username });
+                        const { data, error } = await supabase.auth.signInWithPassword({
+                            email: `${username}@example.com`,
+                            password,
+                        });
+
+                        if (error) {
+                            console.error('Sign in error:', error);
+                            alert('Error signing in: ' + error.message);
+                            return;
+                        }
+
+                        console.log('Sign in successful:', data);
+                        showContactForm();
+                    } catch (error) {
+                        console.error('Unexpected error:', error);
+                        alert('An unexpected error occurred: ' + error.message);
                     }
+                }
 
-                    console.log('Attempting sign up with:', { username });
-                    const { data, error } = await supabase.auth.signUp({
-                        email: `${username}@example.com`,
-                        password,
-                    });
+                async function handleSignUp() {
+                    try {
+                        const username = document.getElementById('authUsername').value;
+                        const password = document.getElementById('authPassword').value;
+                        
+                        if (!username || !password) {
+                            alert('Please fill in both username and password');
+                            return;
+                        }
 
-                    if (error) {
-                        console.error('Sign up error:', error);
-                        alert('Error signing up: ' + error.message);
-                        return;
+                        console.log('Attempting sign up with:', { username });
+                        const { data, error } = await supabase.auth.signUp({
+                            email: `${username}@example.com`,
+                            password,
+                        });
+
+                        if (error) {
+                            console.error('Sign up error:', error);
+                            alert('Error signing up: ' + error.message);
+                            return;
+                        }
+
+                        console.log('Sign up successful:', data);
+                        alert('Registration successful! Please sign in.');
+                    } catch (error) {
+                        console.error('Unexpected error:', error);
+                        alert('An unexpected error occurred: ' + error.message);
                     }
-
-                    console.log('Sign up successful:', data);
-                    alert('Registration successful! Please sign in.');
-                } catch (error) {
-                    console.error('Unexpected error:', error);
-                    alert('An unexpected error occurred: ' + error.message);
                 }
-            }
 
-            // Event listeners
-            document.getElementById('signInBtn').addEventListener('click', handleSignIn);
-            document.getElementById('signUpBtn').addEventListener('click', handleSignUp);
+                // Event listeners
+                document.getElementById('signInBtn').addEventListener('click', handleSignIn);
+                document.getElementById('signUpBtn').addEventListener('click', handleSignUp);
 
-            // Contact form handler
-            document.getElementById('contactForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                try {
-                    const session = supabase.auth.getSession();
-                    if (!session.data.session) {
-                        alert('Please sign in first');
-                        return;
+                // Contact form handler
+                document.getElementById('contactForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const session = supabase.auth.getSession();
+                        if (!session.data.session) {
+                            alert('Please sign in first');
+                            return;
+                        }
+                        const userId = session.data.session.user.id;
+                        
+                        const userData = {
+                            name: document.getElementById('name').value,
+                            message: document.getElementById('message').value
+                        };
+
+                        await saveUserData(userId, userData);
+                        alert('Data saved successfully!');
+                        document.getElementById('contactForm').reset();
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Error saving data: ' + error.message);
                     }
-                    const userId = session.data.session.user.id;
-                    
-                    const userData = {
-                        name: document.getElementById('name').value,
-                        message: document.getElementById('message').value
-                    };
+                });
 
-                    await saveUserData(userId, userData);
-                    alert('Data saved successfully!');
-                    document.getElementById('contactForm').reset();
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('Error saving data: ' + error.message);
+                // Show/hide forms
+                function showContactForm() {
+                    document.getElementById('authForm').style.display = 'none';
+                    document.getElementById('contactForm').style.display = 'block';
                 }
-            });
 
-            // Show/hide forms
-            function showContactForm() {
-                document.getElementById('authForm').style.display = 'none';
-                document.getElementById('contactForm').style.display = 'block';
+                // Check if user is already signed in
+                supabase.auth.onAuthStateChange((event, session) => {
+                    if (session) {
+                        showContactForm();
+                    }
+                });
+
+                // Initialize the app
+                initApp();
             }
-
-            // Check if user is already signed in
-            supabase.auth.onAuthStateChange((event, session) => {
-                if (session) {
-                    showContactForm();
-                }
-            });
-        }
-
-        // Initialize the app
-        initApp();
+        })();
     </script>
 </body>
 </html>
