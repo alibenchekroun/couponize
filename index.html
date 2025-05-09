@@ -123,11 +123,11 @@
                 <h2>Sign In</h2>
                 <div class="form-group">
                     <label for="authUsername">Username</label>
-                    <input type="text" id="authUsername" required>
+                    <input type="text" id="authUsername" name="username" autocomplete="username" required>
                 </div>
                 <div class="form-group">
                     <label for="authPassword">Password</label>
-                    <input type="password" id="authPassword" required>
+                    <input type="password" id="authPassword" name="password" autocomplete="current-password" required>
                 </div>
                 <button type="button" id="signInBtn" class="auth-btn">Sign In</button>
                 <button type="button" id="signUpBtn" class="auth-btn">Sign Up</button>
@@ -150,17 +150,16 @@
         </div>
     </div>
     <script>
-        // Wrap everything in an IIFE to avoid scope issues
-        (async function() {
-            // Supabase configuration
-            const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
-            
-            // Initialize app
-            async function initApp() {
-                // Initialize the Supabase client
-                const { createClient } = supabase
-                const supabase = createClient(supabaseUrl, supabaseKey)
+        // Supabase configuration
+        const supabaseUrl = 'https://gvmwcbnumuffpkkjehpf.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2bXdjYm51bXVmZnBra2plaHBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0Njc3MzM4NSwiZXhwIjoyMDYyMzQ5Mzg1fQ.PL1qqnjRlltrL-4M29Un41TDmVy--crEycT61AQOpdo'
+        
+        // Initialize the Supabase client
+        const { createClient } = supabase
+        const supabase = createClient(supabaseUrl, supabaseKey)
+
+        // Initialize app
+        async function initApp() {
 
                 if (!supabase) {
                     console.error('Failed to initialize Supabase client');
@@ -275,7 +274,9 @@
                 // Initialize the app
                 initApp();
             }
-        })();
+        
+        // Initialize the app
+        initApp();
     </script>
 </body>
 </html>
